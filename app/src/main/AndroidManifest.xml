@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.magic_app.magic">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera2" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".MagicApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoTitleBar">
+
+
+        <meta-data
+            android:name="com.locator_app.locator.customglide.LocatorGlideModule"
+            android:value="GlideModule" />
+        <activity
+            android:name=".view.cardstack.CardActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.camera.CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.camera.RuntimePermissionActivity" />
+        <activity android:name=".view.scrolling3.ScrollableImageActivity" />
+        <activity android:name=".view.scrolling4.ScrollingActivity" />
+        <activity android:name=".view.ImageActivity"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ScrollableComponent">
+        <attr name="android:fadeScrollbars" />
+        <attr name="android:scrollbarAlwaysDrawHorizontalTrack" />
+        <attr name="android:scrollbarAlwaysDrawVerticalTrack" />
+        <attr name="android:scrollbarDefaultDelayBeforeFade" />
+        <attr name="android:scrollbarFadeDuration" />
+        <attr name="android:scrollbarSize" />
+        <attr name="android:scrollbarStyle" />
+        <attr name="android:scrollbarThumbHorizontal" />
+        <attr name="android:scrollbarThumbVertical" />
+        <attr name="android:scrollbarTrackHorizontal" />
+        <attr name="android:scrollbarTrackVertical" />
+        <attr name="android:scrollbars" />
+        <attr name="interceptTouchEvent" format="boolean"/>
+        <attr name="rangeView" format="reference"/>
+        <attr name="rangeViewGroup" format="reference"/>
+        <attr name="scrollWidth" format="dimension"/>
+        <attr name="scrollHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeDeck2">
+        <attr name="max_visible" format="integer"/>
+        <attr name="opacity_end" format="float"/>
+        <attr name="rotation_degrees" format="float"/>
+        <attr name="card_spacing" format="dimension"/>
+        <attr name="render_above" format="boolean"/>
+        <attr name="swipe_enabled" format="boolean"/>
+        <attr name="preview_layout" format="reference"/>
+    </declare-styleable>
+
+
+
+</resources>
+
