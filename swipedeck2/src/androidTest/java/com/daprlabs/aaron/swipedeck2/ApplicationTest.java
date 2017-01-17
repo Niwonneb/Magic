@@ -1,4 +1,4 @@
-package com.magic_app.magic.view.swipedeck;
+package com.ngw.toowyn.view.swipedeck;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

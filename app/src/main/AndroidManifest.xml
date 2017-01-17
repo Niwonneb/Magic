@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.magic_app.magic">
+    package="com.ngw.toowyn">
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -11,10 +11,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MagicApplication"
+        android:name="com.ngw.toowyn.ToowynApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/common_google_signin_btn_icon_light_disabled"
+        android:label="toowyn"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
 
@@ -23,7 +23,7 @@
             android:name="com.locator_app.locator.customglide.LocatorGlideModule"
             android:value="GlideModule" />
         <activity
-            android:name=".view.cardstack.CardActivity"
+            android:name="com.ngw.toowyn.view.cardstack.CardActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.camera.CameraActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".view.camera.RuntimePermissionActivity" />
-        <activity android:name=".view.scrolling3.ScrollableImageActivity" />
-        <activity android:name=".view.scrolling4.ScrollingActivity" />
-        <activity android:name=".view.ImageActivity"/>
     </application>
 
 </manifest>

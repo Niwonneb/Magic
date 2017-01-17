@@ -6,36 +6,35 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import com.ngw.toowyn.view.swipedeck.SwipeDeck;
 
 import java.util.ArrayList;
 
-/**
- * Created by aaron on 23/12/2015.
- */
-public class SwipeRelativeLayout extends RelativeLayout {
-    public SwipeRelativeLayout(Context context) {
+public class SwipeFrameLayout extends FrameLayout {
+    public SwipeFrameLayout(Context context) {
         super(context);
         setClipChildren(false);
     }
 
-    public SwipeRelativeLayout(Context context, AttributeSet attrs) {
+    public SwipeFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         setClipChildren(false);
     }
 
-    public SwipeRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SwipeFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setClipChildren(false);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SwipeRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SwipeFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setClipChildren(false);
     }
 
+    //this is so that on versions of android pre lollipop it will render the cardstack above
+    //everything else within the layout
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -63,4 +62,5 @@ public class SwipeRelativeLayout extends RelativeLayout {
         invalidate();
         requestLayout();
     }
+
 }

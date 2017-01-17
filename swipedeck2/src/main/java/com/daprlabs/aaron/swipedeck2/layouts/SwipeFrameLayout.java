@@ -1,4 +1,4 @@
-package com.magic_app.magic.view.swipedeck.layouts;
+package com.ngw.toowyn.view.swipedeck.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import com.magic_app.magic.view.swipedeck.SwipeDeck;
+import com.ngw.toowyn.view.swipedeck.SwipeDeck;
 
 import java.util.ArrayList;
 

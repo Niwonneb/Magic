@@ -12,14 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.FrameLayout;
 
-import com.ngw.toowyn.view.swipedeck.R;
 import com.ngw.toowyn.view.swipedeck.Utility.Deck;
 import com.ngw.toowyn.view.swipedeck.Utility.RxBus;
 import com.ngw.toowyn.view.swipedeck.Utility.SwipeCallback;
 
-/**
- * Created by aaron on 21/08/2016.
- */
+import com.ngw.toowyn.R;
+
+
 public class SwipeDeck extends FrameLayout {
 
     private static final String TAG = "SwipeDeck MainActivity";
@@ -165,6 +164,7 @@ public class SwipeDeck extends FrameLayout {
                     for(int i=0; i<deck.size(); ++i){
                         if(deck.get(i).getCard() == card){
                             deck.remove(deck.get(i));
+                            callback.cardSwipedLeft(i);
                             break;
                         }
                     }
@@ -176,6 +176,7 @@ public class SwipeDeck extends FrameLayout {
                     for(int i=0; i<deck.size(); ++i){
                         if(deck.get(i).getCard() == card){
                             deck.remove(deck.get(i));
+                            callback.cardSwipedRight(i);
                             break;
                         }
                     }

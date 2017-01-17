@@ -6,9 +6,6 @@ import com.ngw.toowyn.view.swipedeck.Utility.RxBus;
 import com.ngw.toowyn.view.swipedeck.Utility.SwipeCallback;
 import com.ngw.toowyn.view.swipedeck.Utility.SwipeListener;
 
-/**
- * Created by aaron on 21/08/2016.
- */
 public class CardContainer {
 
     private View view;

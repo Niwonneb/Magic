@@ -8,9 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * Created by aaron on 21/08/2016.
- */
 public class Deck<T> implements List<T> {
 
     private ArrayList<T> internalList = new ArrayList<>();
