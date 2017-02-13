@@ -1,19 +1,18 @@
-package com.ngw.toowyn.apiservice;
+package com.ngw.seed.server_connection;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-import java.net.CookieStore;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
-public class ServiceFactory {
+public class ServerServiceFactory {
+
+
+    static String serverUrl = "http://192.168.43.209:8080/";
 
     private static Retrofit retrofit;
 
@@ -29,7 +28,7 @@ public class ServiceFactory {
             client.interceptors().add(interceptor);
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Api.serverUrl)
+                    .baseUrl(serverUrl)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

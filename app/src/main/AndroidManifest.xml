@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ngw.toowyn">
-
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera2" />
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ngw.seed">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.ngw.toowyn.ToowynApplication"
+        android:name="com.ngw.seed.SeedApplication"
         android:allowBackup="true"
-        android:icon="@drawable/common_google_signin_btn_icon_light_disabled"
-        android:label="toowyn"
+        android:icon="@drawable/icon"
+        tools:replace="android:label"
+        android:label="seed"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
-
-
-        <meta-data
-            android:name="com.locator_app.locator.customglide.LocatorGlideModule"
-            android:value="GlideModule" />
         <activity
-            android:name="com.ngw.toowyn.view.cardstack.CardActivity"
+            android:name="com.ngw.seed.view.CardActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

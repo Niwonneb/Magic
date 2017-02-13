@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fbutton_color_clouds"
+    android:id="@+id/swipeLayout"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/linearLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <info.hoang8f.widget.FButton
+                android:onClick="redButtonClicked"
+                android:layout_centerInParent="true"
+                fbutton:buttonColor="@color/fbutton_color_alizarin"
+                fbutton:shadowColor="@color/fbutton_color_pomegranate"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="10dp"
+                fbutton:cornerRadius="10dp"
+                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:drawablePadding="50dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <info.hoang8f.widget.FButton
+                android:onClick="blueButtonClicked"
+                android:layout_centerInParent="true"
+                fbutton:buttonColor="@color/fbutton_color_wet_asphalt"
+                fbutton:shadowColor="@color/fbutton_color_midnight_blue"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="10dp"
+                fbutton:cornerRadius="10dp"
+                android:layout_height="80dp"
+                android:layout_width="70dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <info.hoang8f.widget.FButton
+                android:onClick="yellowButtonClicked"
+                android:layout_centerInParent="true"
+                fbutton:buttonColor="@color/fbutton_color_carrot"
+                fbutton:shadowColor="@color/fbutton_color_pumpkin"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="10dp"
+                fbutton:cornerRadius="10dp"
+                android:layout_height="80dp"
+                android:layout_width="70dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.daprlabs.aaron.swipedeck.SwipeDeck
+        android:id="@+id/swipe_deck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="130dp"
+        android:paddingBottom="20dp"
+        swipedeck:max_visible="3"
+        swipedeck:render_above="false"
+        swipedeck:card_spacing="15dp"
+        swipedeck:preview_layout="@layout/card_view_thought"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>
