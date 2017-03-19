@@ -23,6 +23,9 @@ public class InfoCard extends AbstractCard {
         TextView textView = (TextView) view.findViewById(R.id.textView);
         textView.setText(message);
 
+        TextView backgroundText = (TextView) view.findViewById(R.id.backgroundText);
+        backgroundText.setText("");
+
         ImageView imageView1 = (ImageView) view.findViewById(R.id.left_image);
         ImageView imageView2 = (ImageView) view.findViewById(R.id.right_image);
 

@@ -6,6 +6,16 @@ import android.widget.EditText;
 import com.ngw.seed.R;
 
 public class CreateThoughtCard extends AbstractCard {
+    private boolean isQuestion;
+
+    public CreateThoughtCard(boolean isQuestion) {
+        this.isQuestion = isQuestion;
+    }
+
+    public boolean isQuestion() {
+        return isQuestion;
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.card_view_create_thought;
@@ -21,7 +31,7 @@ public class CreateThoughtCard extends AbstractCard {
         return Type.CREATION;
     }
 
-    EditText editText;
+    private EditText editText;
 
     @Override
     public void setUpView(View view) {

@@ -2,6 +2,8 @@ package com.ngw.seed.server_connection;
 
 import com.ngw.seed.model.Thought;
 
+import java.util.List;
+
 import retrofit.Call;
 import retrofit.Response;
 import retrofit.http.Field;
@@ -19,24 +21,26 @@ public class ThoughtApiService {
         @GET("/thoughts/getThoughtFromStart")
         Observable<Response<Thought>> getThoughtFromStart();
 
-        @GET("/thoughts/getNextAfterLiked/{id}")
-        Observable<Response<Thought>> getNextThoughtAfterLiked(@Path("id") String id);
-
-        @GET("/thoughts/getNextAfterDisliked/{id}")
-        Observable<Response<Thought>> getNextThoughtAfterDisliked(@Path("id") String id);
+        @FormUrlEncoded
+        @POST("/thoughts/getNext")
+        Observable<Response<Thought>> getNextThought(@Field("id") String id,
+                                                     @Field("exceptionIds") List<String> exceptionIds);
 
         @FormUrlEncoded
         @POST("/thoughts/rateThought")
         Observable<Response<Thought>> rateThought(@Field("idBefore") String title,
-                                                  @Field("likedBefore") Boolean likedBefore,
                                                   @Field("idNow") String idNow,
                                                   @Field("likedNow") Boolean likedNow);
 
         @FormUrlEncoded
-        @POST("/thoughts/createThought")
-        Observable<Response<Thought>> createThought(@Field("text") String text,
-                                                    @Field("idBefore") String idBefore,
-                                                    @Field("likedBefore") Boolean likedBefore);
+        @POST("/thoughts/createQuestion")
+        Observable<Response<Thought>> createQuestion(@Field("text") String text,
+                                                     @Field("idBefore") String idBefore);
+
+        @FormUrlEncoded
+        @POST("/thoughts/createAnswer")
+        Observable<Response<Thought>> createAnswer(@Field("text") String text,
+                                                   @Field("idBefore") String idBefore);
     }
 
     private SeedServerApi apiService = ServerServiceFactory.createService(SeedServerApi.class);
@@ -45,23 +49,26 @@ public class ThoughtApiService {
         return unwrapAndSubscribe(apiService.getThoughtFromStart());
     }
 
-    public Observable<Thought> getNextThought(String thoughtId, boolean liked) {
-        if (liked) {
-            return unwrapAndSubscribe(apiService.getNextThoughtAfterLiked(thoughtId));
-        } else {
-            return unwrapAndSubscribe(apiService.getNextThoughtAfterDisliked(thoughtId));
-        }
+    public Observable<Thought> getNextThought(String thoughtId, List<String> exceptionIds) {
+        return unwrapAndSubscribe(apiService.getNextThought(thoughtId, exceptionIds));
     }
 
-    public void createThought(String text, String idBefore, boolean likedBefore) {
-        unwrapAndSubscribe(apiService.createThought(text, idBefore, likedBefore))
+    public void createQuestion(String text, String idBefore) {
+        unwrapAndSubscribe(apiService.createQuestion(text, idBefore))
             .subscribe(
                     (result)->{},
                     (error) -> {});
     }
 
-    public void rateThought(String idBefore, boolean likedBefore, String idNow, boolean likedNow) {
-        unwrapAndSubscribe(apiService.rateThought(idBefore, likedBefore, idNow, likedNow))
+    public void createAnswer(String text, String idBefore) {
+        unwrapAndSubscribe(apiService.createAnswer(text, idBefore))
+            .subscribe(
+                    (result)->{},
+                    (error) -> {});
+    }
+
+    public void rateThought(String idBefore, String idNow, boolean likedNow) {
+        unwrapAndSubscribe(apiService.rateThought(idBefore, idNow, likedNow))
             .subscribe(
                     (result)->{},
                     (error) -> {});

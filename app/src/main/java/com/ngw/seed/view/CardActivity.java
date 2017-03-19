@@ -31,15 +31,8 @@ public class CardActivity extends Activity {
 
     private Thought previousThought;
     private Thought currentThought;
-    private boolean previousLiked;
-    private boolean currentLiked;
 
     private RelativeLayout layout;
-
-    static private LinkedList<Card> firstCards = new LinkedList<>();
-    static {
-        firstCards.add(new InfoCard("Welcome back :)"));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +44,8 @@ public class CardActivity extends Activity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(getResources().getColor(R.color.fbutton_color_silver));
 
-        previousThought = new Thought("start", "");
-        currentThought = new Thought("start", "");
-        previousLiked = true;
-        currentLiked = true;
+        previousThought = new Thought("start", "", false);
+        currentThought = new Thought("start", "", false);
 
         SwipeDeck swipeDeck = (SwipeDeck) findViewById(R.id.swipe_deck);
         layout = (RelativeLayout) findViewById(R.id.swipeLayout);
@@ -65,8 +56,7 @@ public class CardActivity extends Activity {
         thoughtApiService = new ThoughtApiService();
 
         adapter = new SwipeDeckAdapter();
-        adapter.addCard(new InfoCard("Welcome back :)"));
-        newThoughtFromStart();
+        adapter.addCard(new InfoCard("Willkommen zurück :)"));
 
         swipeDeck.setAdapter(adapter);
         swipeDeck.setCallback(new SwipeDeck.SwipeDeckCallback() {
@@ -97,21 +87,33 @@ public class CardActivity extends Activity {
 
     private void createThought(CreateThoughtCard card) {
         if (!card.getText().equals("")) {
-            thoughtApiService.createThought(card.getText(), previousThought.getId(), previousLiked);
+            if (card.isQuestion()) {
+                thoughtApiService.createQuestion(card.getText(), previousThought.getId());
+            } else {
+                thoughtApiService.createAnswer(card.getText(), previousThought.getId());
+            }
         }
+        thoughtApiService.getThoughtFromStart();
     }
 
     private void rateThought(ThoughtCard card, boolean liked) {
-        currentLiked = liked;
-        thoughtApiService.rateThought(previousThought.getId(), previousLiked, card.getThoughtId(), liked);
+        thoughtApiService.rateThought(previousThought.getId(), card.getThoughtId(), liked);
         if (card.getThoughtId().equals(currentThought.getId())) {
             thoughtApiService.getNextThought(currentThought.getId(), liked)
                     .subscribe(
-                            this::addThoughtCard,
+                            this::processThoughtFromServer,
                         (error) -> {
-                            adapter.addCard(new InfoCard("Couldn't reach server :("));
+                            adapter.addCard(new InfoCard("Server konnte nicht erreicht werden :("));
                         }
                     );
+        }
+    }
+
+    private void processThoughtFromServer(Thought thought) {
+        if (thought.getId().equals("create")) {
+            addCreateThoughtCard();
+        } else {
+            addThoughtCard(thought);
         }
     }
 
@@ -119,24 +121,22 @@ public class CardActivity extends Activity {
         if (thought != null) {
             adapter.addCard(new ThoughtCard(thought));
             previousThought = currentThought;
-            previousLiked = currentLiked;
             currentThought = thought;
         } else {
-            adapter.addCard(new InfoCard("Server returned something dumb :("));
+            adapter.addCard(new InfoCard("Der Server hat was dummes zurück gegeben :("));
         }
     }
 
-    public void addCreateThoughtCard() {
-        adapter.addCard(new CreateThoughtCard());
+    public void addCreateThoughtCard(boolean createQuestion) {
+        adapter.addCard(new CreateThoughtCard(createQuestion));
     }
-
 
     private void newThoughtFromStart() {
         thoughtApiService.getThoughtFromStart()
             .subscribe(
-                    this::addThoughtCard,
+                    this::processThoughtFromServer,
                 (error) -> {
-                    adapter.addCard(new InfoCard("Couldn't reach server :("));
+                    adapter.addCard(new InfoCard("Server konnte nicht erreicht werden :("));
                 }
             );
     }
@@ -160,7 +160,6 @@ public class CardActivity extends Activity {
     }
 
     public void yellowButtonClicked(View view) {
-        addCreateThoughtCard();
     }
 
     public class SwipeDeckAdapter extends BaseAdapter {
@@ -194,14 +193,6 @@ public class CardActivity extends Activity {
         @Override
         public long getItemId(int position) {
             return position;
-        }
-
-        public void removeFirst() {
-            if (!cards.isEmpty()) {
-
-                cards.remove(0);
-                notifyDataSetChanged();
-            }
         }
 
         @Override
