@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MindTime.iml" filepath="$PROJECT_DIR$/MindTime.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/seed.iml" filepath="$PROJECT_DIR$/seed.iml" />
     </modules>
   </component>
 </project>

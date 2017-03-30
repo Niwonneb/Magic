@@ -21,16 +21,17 @@
             android:layout_weight="1">
 
             <info.hoang8f.widget.FButton
-                android:onClick="redButtonClicked"
+                android:onClick="leftButtonClicked"
                 android:layout_centerInParent="true"
-                fbutton:buttonColor="@color/fbutton_color_alizarin"
-                fbutton:shadowColor="@color/fbutton_color_pomegranate"
+                fbutton:buttonColor="#007f7f"
+                fbutton:shadowColor="#006f6f"
                 fbutton:shadowEnabled="true"
                 fbutton:shadowHeight="10dp"
                 fbutton:cornerRadius="10dp"
                 android:layout_height="80dp"
                 android:layout_width="70dp"
-                android:drawablePadding="50dp"/>
+                android:drawablePadding="50dp"
+                android:id="@+id/leftButton"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -39,15 +40,16 @@
             android:layout_weight="1">
 
             <info.hoang8f.widget.FButton
-                android:onClick="blueButtonClicked"
+                android:onClick="middleButtonClicked"
                 android:layout_centerInParent="true"
-                fbutton:buttonColor="@color/fbutton_color_peter_river"
-                fbutton:shadowColor="@color/fbutton_color_belize_hole"
+                fbutton:buttonColor="#007f7f"
+                fbutton:shadowColor="#006f6f"
                 fbutton:shadowEnabled="true"
                 fbutton:shadowHeight="10dp"
                 fbutton:cornerRadius="10dp"
                 android:layout_height="80dp"
-                android:layout_width="70dp" />
+                android:layout_width="70dp"
+                android:id="@+id/middleButton"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -56,10 +58,11 @@
             android:layout_weight="1">
 
             <info.hoang8f.widget.FButton
-                android:onClick="yellowButtonClicked"
+                android:onClick="rightButtonClicked"
+                android:id="@+id/rightButton"
                 android:layout_centerInParent="true"
-                fbutton:buttonColor="@color/fbutton_color_orange"
-                fbutton:shadowColor="@color/fbutton_color_carrot"
+                fbutton:buttonColor="#007f7f"
+                fbutton:shadowColor="#006f6f"
                 fbutton:shadowEnabled="true"
                 fbutton:shadowHeight="10dp"
                 fbutton:cornerRadius="10dp"
