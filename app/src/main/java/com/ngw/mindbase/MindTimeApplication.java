@@ -1,4 +1,4 @@
-package com.ngw.mindtime;
+package com.ngw.mindbase;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.ngw.mindtime.view;
+package com.ngw.mindbase.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,12 +20,12 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
-import com.ngw.mindtime.R;
-import com.ngw.mindtime.database.SharedData;
-import com.ngw.mindtime.model.Thought;
-import com.ngw.mindtime.view.cards.Card;
-import com.ngw.mindtime.view.cards.CreateThoughtCard;
-import com.ngw.mindtime.view.cards.ThoughtCard;
+import com.ngw.mindbase.R;
+import com.ngw.mindbase.database.SavedData;
+import com.ngw.mindbase.model.Thought;
+import com.ngw.mindbase.view.cards.Card;
+import com.ngw.mindbase.view.cards.CreateThoughtCard;
+import com.ngw.mindbase.view.cards.ThoughtCard;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class CardActivity extends Activity {
     private SwipeDeckAdapter adapter;
     private SwipeDeck swipeDeck;
     private RelativeLayout layout;
-    private SharedData sharedData;
+    private SavedData savedData;
     private Thought thoughtTree;
     private List<Thought> alreadyViewedThoughts = new LinkedList<>();
     private Thought previousThought;
@@ -108,10 +108,10 @@ public class CardActivity extends Activity {
     }
 
     private void addFirstCard() {
-        sharedData = new SharedData(this.getSharedPreferences("com.ngw.mindtime", Context.MODE_PRIVATE));
-        thoughtTree = sharedData.getThoughtTree();
+        savedData = new SavedData(this.getSharedPreferences("ngw.mindtime", Context.MODE_PRIVATE));
+        thoughtTree = savedData.getThoughtTree();
         if (thoughtTree == null) {
-            thoughtTree = Thought.createInitialThoughtTree();
+            thoughtTree = Thought.createInitialThoughtTree(getResources());
         }
         previousThought = thoughtTree;
         adapter.addCard(new ThoughtCard(thoughtTree.getFollowingThought()));
@@ -138,26 +138,25 @@ public class CardActivity extends Activity {
                 previousThought = thought;
                 addThoughtCard(thought.getFollowingThought());
             } else {
-                Thought.ThoughtType type = (thought.getType() == Thought.ThoughtType.Question ? Thought.ThoughtType.Answer : Thought.ThoughtType.Question);
-                addCreationCard(type, thought);
+                addCreationCard(thought);
             }
         } else {
             alreadyViewedThoughts.add(thought);
             if (previousThought.hasFollowingThought(alreadyViewedThoughts)) {
                 addThoughtCard(previousThought.getFollowingThought(alreadyViewedThoughts));
             } else {
-                alreadyViewedThoughts.clear();
                 if (previousThought == thoughtTree) {
+                    alreadyViewedThoughts.clear();
                     addThoughtCard(thoughtTree.getFollowingThought());
                 } else {
-                    addCreationCard(thought.getType(), previousThought);
+                    addCreationCard(previousThought);
                 }
             }
         }
     }
 
-    private void addCreationCard(Thought.ThoughtType type, Thought previousThought) {
-        adapter.addCard(new CreateThoughtCard(type, previousThought));
+    private void addCreationCard(Thought previousThought) {
+        adapter.addCard(new CreateThoughtCard(previousThought, middleButton.getShadowColor()));
     }
 
     private void addThoughtCard(Thought thought) {
@@ -168,17 +167,10 @@ public class CardActivity extends Activity {
         String text = card.getText();
         if (!text.equals("") &&
             positive) {
-            if (card.isQuestion() &&
-                !text.endsWith("?")) {
-                text = text + "?";
-            } else if (!card.isQuestion() &&
-                       text.endsWith("?") ) {
-                text = text + "!";
-            }
-            Thought newThought = new Thought(text, card.getPreviousThought(), card.getCreatedThoughtType());
+            Thought newThought = new Thought(text);
             card.getPreviousThought().addFollowingThought(newThought);
 
-            sharedData.saveThoughtTree(thoughtTree);
+            savedData.saveThoughtTree(thoughtTree);
 
             previousThought = card.getPreviousThought();
             adapter.addCard(new ThoughtCard(newThought));
@@ -196,26 +188,18 @@ public class CardActivity extends Activity {
         int buttonColor;
         int shadowColor;
 
-        if (rnd.nextInt(10) == 1) {
-            statusBarColor = getResources().getColor(R.color.fbutton_color_silver);
-            backgroundColor = getResources().getColor(R.color.fbutton_color_clouds);
+        int red   = rnd.nextInt(256);
+        int green = rnd.nextInt(256);
+        int blue  = rnd.nextInt(256);
+        backgroundColor = Color.argb(255, red, green, blue);
+        statusBarColor = Color.argb(255, addRGB(red, -10), addRGB(green, -10), addRGB(blue, -10));
 
-            buttonColor = Color.parseColor("#007f7f");
-            shadowColor = Color.parseColor("#006f6f");
-        } else {
-            int red   = rnd.nextInt(256);
-            int green = rnd.nextInt(256);
-            int blue  = rnd.nextInt(256);
-            backgroundColor = Color.argb(255, red, green, blue);
-            statusBarColor = Color.argb(255, addRGB(red, -10), addRGB(green, -10), addRGB(blue, -10));
+        red   = rnd.nextInt(256);
+        green = rnd.nextInt(256);
+        blue  = rnd.nextInt(256);
 
-            red   = rnd.nextInt(256);
-            green = rnd.nextInt(256);
-            blue  = rnd.nextInt(256);
-
-            buttonColor = Color.argb(255, red, green, blue);
-            shadowColor = Color.argb(255, addRGB(red, -20), addRGB(green, -20), addRGB(blue, -20));
-        }
+        buttonColor = Color.argb(255, red, green, blue);
+        shadowColor = Color.argb(255, addRGB(red, -20), addRGB(green, -20), addRGB(blue, -20));
 
         setColors(backgroundColor, statusBarColor, buttonColor, shadowColor);
         saveColors(backgroundColor, statusBarColor, buttonColor, shadowColor);
@@ -233,7 +217,7 @@ public class CardActivity extends Activity {
 
     private void saveColors(int backgroundColor, int statusBarColor, int buttonColor, int shadowColor) {
         SharedPreferences prefs = this.getSharedPreferences(
-              "com.ngw.mindtime", Context.MODE_PRIVATE);
+              "com.ngw.mindbase", Context.MODE_PRIVATE);
 
         prefs.edit().putInt("backgroundColor", backgroundColor).apply();
         prefs.edit().putInt("statusBarColor", statusBarColor).apply();
@@ -243,7 +227,7 @@ public class CardActivity extends Activity {
 
     private void setSavedColors() {
         SharedPreferences prefs = this.getSharedPreferences(
-              "com.ngw.mindtime", Context.MODE_PRIVATE);
+              "com.ngw.mindbase", Context.MODE_PRIVATE);
 
         if (prefs.contains("backgroundColor") &&
             prefs.contains("statusBarColor")) {
@@ -259,6 +243,13 @@ public class CardActivity extends Activity {
     private void setColors(int backgroundColor, int statusBarColor, int buttonColor, int shadowColor) {
         getWindow().setStatusBarColor(statusBarColor);
         layout.setBackgroundColor(backgroundColor);
+        if (adapter != null) {
+            Card currentCard = (Card) adapter.getItem(adapter.getCount() - 1);
+            if (currentCard instanceof CreateThoughtCard) {
+                CreateThoughtCard creationCard = (CreateThoughtCard) currentCard;
+                creationCard.setColor(shadowColor);
+            }
+        }
 
         setButtonColors(buttonColor, shadowColor);
     }
@@ -278,18 +269,16 @@ public class CardActivity extends Activity {
         if (previousThought != thoughtTree) {
             Card currentCard = (Card) adapter.getItem(adapter.getCount() - 1);
             if (currentCard instanceof ThoughtCard) {
-                if (!((ThoughtCard) currentCard).getThought().hasFollowingThought()) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.DialogStyle));
-                    builder.setMessage("Diese Karte löschen?")
-                           .setPositiveButton("Ja", (dialog, which) -> {
-                                if (which == DialogInterface.BUTTON_POSITIVE) {
-                                    previousThought.deleteFollowingThought(((ThoughtCard) currentCard).getThought());
-                                    swipeDeck.swipeTopCardLeft(500);
-                                }})
-                           .setNegativeButton("Nein", null)
-                           .show();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.DialogStyle));
+                builder.setMessage(getResources().getString(R.string.delete))
+                        .setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> {
+                            if (which == DialogInterface.BUTTON_POSITIVE) {
+                                previousThought.deleteFollowingThought(((ThoughtCard) currentCard).getThought());
+                                swipeDeck.swipeTopCardLeft(500);
+                                savedData.saveThoughtTree(thoughtTree);
+                            }})
+                        .setNegativeButton(getResources().getString(R.string.no), null)
+                        .show();
             }
         }
     }
@@ -299,11 +288,9 @@ public class CardActivity extends Activity {
         if (previousThought != thoughtTree) {
             Card currentCard = (Card) adapter.getItem(adapter.getCount() - 1);
             if (currentCard instanceof ThoughtCard) {
-                ThoughtCard card = (ThoughtCard) currentCard;
-                Thought thought = card.getThought();
                 ignoreNextSwipe = true;
                 swipeDeck.swipeTopCardLeft(500);
-                addCreationCard(thought.getType(), previousThought);
+                addCreationCard(previousThought);
             }
         }
     }

@@ -1,21 +1,16 @@
-package com.ngw.mindtime.view.cards;
+package com.ngw.mindbase.view.cards;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ngw.mindtime.R;
-import com.ngw.mindtime.model.Thought;
+import com.ngw.mindbase.R;
 
-public class ThoughtCard extends AbstractCard {
-    private Thought thought;
+public class InfoCard extends AbstractCard {
+    private String message;
 
-    public ThoughtCard(Thought thought) {
-        this.thought = thought;
-    }
-
-    public Thought getThought() {
-        return thought;
+    public InfoCard(String message) {
+        this.message = message;
     }
 
     @Override
@@ -26,13 +21,13 @@ public class ThoughtCard extends AbstractCard {
     @Override
     public void setUpView(View view) {
         TextView textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText(thought.getText());
+        textView.setText(message);
 
         ImageView imageView1 = (ImageView) view.findViewById(R.id.left_image);
         ImageView imageView2 = (ImageView) view.findViewById(R.id.right_image);
 
-        imageView1.setVisibility(View.VISIBLE);
-        imageView2.setVisibility(View.VISIBLE);
+        imageView1.setVisibility(View.INVISIBLE);
+        imageView2.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -42,6 +37,6 @@ public class ThoughtCard extends AbstractCard {
 
     @Override
     public Type getType() {
-        return Type.THOUGHT;
+        return Type.OTHER;
     }
 }

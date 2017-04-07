@@ -1,4 +1,8 @@
-package com.ngw.mindtime.model;
+package com.ngw.mindbase.model;
+
+import android.content.res.Resources;
+
+import com.ngw.mindbase.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,11 +11,19 @@ import java.util.Random;
 public class Thought {
     private List<Thought> followingThoughts = new LinkedList<>();
     private String text;
-    private ThoughtType type;
+    private boolean isInitialQuestion;
 
-    public Thought(String text, Thought previousThought, ThoughtType type) {
+    public Thought(String text) {
+        this(text, false);
+    }
+
+    public Thought(String text, boolean isInitialQuestion) {
         this.text = text;
-        this.type = type;
+        this.isInitialQuestion = isInitialQuestion;
+    }
+
+    public boolean isInitialQuestion() {
+        return isInitialQuestion;
     }
 
     public void addFollowingThought(Thought thought) {
@@ -57,19 +69,22 @@ public class Thought {
         return text;
     }
 
-    public enum ThoughtType {
-        Answer, Question
-    }
+    public static Thought createInitialThoughtTree(Resources res) {
+        Thought initialPastQuestion    = new Thought(res.getString(R.string.pastQuestion), true);
+        Thought initialPresentQuestion = new Thought(res.getString(R.string.presentQuestion), true);
+        Thought initialFutureQuestion  = new Thought(res.getString(R.string.futureQuestion), true);
 
-    public ThoughtType getType() {
-        return type;
-    }
+        initialPastQuestion.addFollowingThought(new Thought(res.getString(R.string.born)));
 
-    public static Thought createInitialThoughtTree() {
-        Thought thoughtTree = new Thought("Super error delux", null, ThoughtType.Question);
-        thoughtTree.addFollowingThought(new Thought("Was macht mir Spaß?", thoughtTree, ThoughtType.Question));
-        thoughtTree.addFollowingThought(new Thought("Was hab ich schon erlebt?", thoughtTree, ThoughtType.Question));
-        thoughtTree.addFollowingThought(new Thought("Was will ich mal werden?", thoughtTree, ThoughtType.Question));
+        initialPresentQuestion.addFollowingThought(new Thought(res.getString(R.string.eat)));
+        initialPresentQuestion.addFollowingThought(new Thought(res.getString(R.string.sleep)));
+
+        initialFutureQuestion.addFollowingThought(new Thought(res.getString(R.string.die)));
+
+        Thought thoughtTree = new Thought("Super Error Delux");
+        thoughtTree.addFollowingThought(initialPastQuestion);
+        thoughtTree.addFollowingThought(initialPresentQuestion);
+        thoughtTree.addFollowingThought(initialFutureQuestion);
         return thoughtTree;
     }
 

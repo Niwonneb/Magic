@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt">Was mag ich an:</string>
+    <string name="pastQuestion">Was habe ich erlebt?</string>
+    <string name="presentQuestion">An was habe ich Freude?</string>
+    <string name="futureQuestion">Was will ich in der Zukunft machen?</string>
+    <string name="born">geboren werden</string>
+    <string name="eat">essen</string>
+    <string name="sleep">schlafen</string>
+    <string name="die">glücklich sterben</string>
+    <string name="delete">Diese Karte und alle darauf bezogenen Karten löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+</resources>

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
-        <item name="android:colorPrimary">@color/fbutton_color_clouds</item>
-        <item name="android:colorPrimaryDark">@color/fbutton_color_silver</item>
-        <item name="android:colorAccent">#64FFDA</item>
-        <item name="android:windowBackground">@color/fbutton_color_clouds</item>
+        <item name="android:colorPrimary">#ffffff</item>
+        <item name="android:colorPrimaryDark">#ffffff</item>
+        <item name="android:windowBackground">@color/cardview_light_background</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor">@color/fbutton_color_silver</item>
+        <item name="android:statusBarColor">#ffffff</item>
     </style>
     <style name="DialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
         <item name="android:textAlignment">center</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
-        <item name="android:textColor">@color/fbutton_color_silver</item>
     </style>
 </resources>

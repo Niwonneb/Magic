@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ngw.mindtime">
+    package="com.ngw.mindbase">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
 
-        android:name="com.ngw.mindtime.MindTimeApplication"
+        android:name="com.ngw.mindbase.MindTimeApplication"
         android:allowBackup="true"
+        tools:replace="android:icon,android:label"
         android:icon="@drawable/icon"
-        tools:replace="android:label"
-        android:label="MindTime"
+        android:label="MindBase"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity

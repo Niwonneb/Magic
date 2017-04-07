@@ -1,4 +1,4 @@
-package com.ngw.mindtime.view.cards;
+package com.ngw.mindbase.view.cards;
 
 import android.view.LayoutInflater;
 import android.view.View;
